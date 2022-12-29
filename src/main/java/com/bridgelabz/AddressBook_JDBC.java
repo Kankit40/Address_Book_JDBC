@@ -1,9 +1,6 @@
 package com.bridgelabz;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class AddressBook_JDBC {
@@ -27,19 +24,67 @@ public class AddressBook_JDBC {
                 System.out.println("ZIP :" + result.getString(7));
                 System.out.println("Phone Number :" + result.getString(8));
                 System.out.println("Email ID :" + result.getString(9));
+                System.out.println("Date :" + result.getString(10));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public static void Update(String a){
+    public static void Update(){
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Address_Book_JDBC", "root", "Ankit@12");
 
-            Statement smt = connection.createStatement();
-            smt.executeUpdate(a);
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Please enter First Name you want to edit");
+            String str10 = sc.nextLine();
+            
+            System.out.println("Please enter First Name");
+            String str1 = sc.nextLine();
+
+            System.out.println("Please enter last Name");
+            String str2 = sc.nextLine();
+
+            System.out.println("Please enter address");
+            String str3 = sc.nextLine();
+
+            System.out.println("Please enter city");
+            String str4 = sc.nextLine();
+
+            System.out.println("Please enter state");
+            String str5 = sc.nextLine();
+
+            System.out.println("Please enter email id");
+            String str8 = sc.nextLine();
+
+            System.out.println("Please enter date");
+            String str9 = sc.nextLine();
+
+            System.out.println("Please enter Phone number");
+            long str7 = sc.nextLong();
+
+            System.out.println("Please enter zip");
+            int str6 = sc.nextInt();
+
+            String sql = "UPDATE Data SET first_name=?,last_name=?,address=?, city=?, state=?, zip=?,phone_number=?, email=?,date=? Where first_name=?";
+             PreparedStatement pstmt = connection.prepareStatement(sql);
+
+
+pstmt.setString(1, str1);
+ pstmt.setString(2, str2);
+ pstmt.setString(3,str3);
+ pstmt.setString(4, str4);
+ pstmt.setString(5, str5);
+ pstmt.setInt(6,str6);
+ pstmt.setLong(7, str7);
+pstmt.setString(8,str8);
+ pstmt.setDate(9,java.sql.Date.valueOf(str9));
+ pstmt.setString(10,str10);
+
+ int affectedRows = pstmt.executeUpdate();
+            System.out.println("Data Changed");
 
 
         } catch (Exception e) {
@@ -66,10 +111,8 @@ public class AddressBook_JDBC {
                 Read();
             } else if (inp == 2) {
 
-                String str = "update Data set first_name='Lalit',last_name='Gupta',address='245/6' where first_name='Ankit';";
-                Update(str);
+            Update();
 
-                System.out.println("Data Updated");
             } else if (inp == 3) {
                 Stopper = false;
             }
