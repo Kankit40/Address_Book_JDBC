@@ -30,7 +30,6 @@ public class AddressBook_JDBC {
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 }
 
